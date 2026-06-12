@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, NavLink, useLocation } from "react-router-dom";
 // import { LOGO_URL } from "@/lib/brand";
 import logo from "../assets/logo.jpeg";
 
@@ -19,7 +19,8 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const location = useLocation();
+  const pathname = location.pathname;
   const isHome = pathname === "/";
   // On inner pages the banner is dark — force the solid nav background so the menu stays readable.
   const solid = scrolled || !isHome;
@@ -57,20 +58,22 @@ export function Navbar() {
 
           <nav className="hidden lg:flex items-center gap-1">
             {links.map((l) => (
-              <Link
+              <NavLink
                 key={l.to}
                 to={l.to}
-                activeProps={{ className: "nav-link-active text-foreground" }}
-                inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
-                activeOptions={{ exact: l.to === "/" }}
-                className="relative px-4 py-2 text-sm font-medium transition-colors group"
+                end={l.to === "/"}
+                className={({ isActive }) =>
+                  `relative px-4 py-2 text-sm font-medium transition-colors group ${
+                    isActive ? "nav-link-active text-foreground" : "text-foreground/70 hover:text-foreground"
+                  }`
+                }
               >
                 {l.label}
                 <span
                   className="nav-underline absolute left-4 right-4 -bottom-0.5 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
                   style={{ background: "var(--gradient-gold)" }}
                 />
-              </Link>
+              </NavLink>
             ))}
           </nav>
 
@@ -96,16 +99,19 @@ export function Navbar() {
               className="lg:hidden mt-2 glass-light rounded-2xl p-4 flex flex-col gap-1"
             >
               {links.map((l) => (
-                <Link
+                <NavLink
                   key={l.to}
                   to={l.to}
+                  end={l.to === "/"}
                   onClick={() => setOpen(false)}
-                  activeProps={{ className: "bg-secondary font-semibold" }}
-                  activeOptions={{ exact: l.to === "/" }}
-                  className="px-4 py-2.5 rounded-lg hover:bg-muted text-sm font-medium"
+                  className={({ isActive }) =>
+                    `px-4 py-2.5 rounded-lg hover:bg-muted text-sm font-medium ${
+                      isActive ? "bg-secondary font-semibold" : ""
+                    }`
+                  }
                 >
                   {l.label}
-                </Link>
+                </NavLink>
               ))}
               <Link to="/contact" onClick={() => setOpen(false)} className="btn-primary mt-2 text-sm">Get Started</Link>
             </motion.nav>

@@ -8,7 +8,7 @@ import {
   CheckCircle2, Brain, Cpu, Zap, Target, Compass, HelpCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Counter } from "@/components/Counter";
 import { SpiderWeb } from "@/components/SpiderWeb";
 import { LOGO_URL, BRAND } from "@/lib/brand";

@@ -1,20 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { PageBanner, Services, Process, TechStack, WhyChooseUs, CTA, Footer } from "@/components/sections";
+import { useDocumentMetadata } from "../hooks/useDocumentMetadata";
 
-export const Route = createFileRoute("/services")({
-  head: () => ({
-    meta: [
-      { title: "Services — TRI·CUBE Digital Solutions" },
-      { name: "description", content: "Website development, Django, Python, e-commerce, internships and final year project services by TRI·CUBE." },
-      { property: "og:title", content: "Services — TRI·CUBE" },
-      { property: "og:description", content: "End-to-end digital and educational services crafted with precision." },
-    ],
-  }),
-  component: ServicesPage,
-});
+export default function ServicesPage() {
+  useDocumentMetadata({
+    title: "Services — TRI·CUBE Digital Solutions",
+    description: "Website development, Django, Python, e-commerce, internships and final year project services by TRI·CUBE.",
+    ogTitle: "Services — TRI·CUBE",
+    ogDescription: "End-to-end digital and educational services crafted with precision."
+  });
 
-function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
